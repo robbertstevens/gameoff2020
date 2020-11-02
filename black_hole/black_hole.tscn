@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://black_hole/black-hole.png" type="Texture" id=1]
+[ext_resource path="res://black_hole/black_hole.gd" type="Script" id=2]
+
+[node name="black_hole" type="Node2D"]
+script = ExtResource( 2 )
+
+[node name="Sprite" type="Sprite" parent="."]
+texture = ExtResource( 1 )
