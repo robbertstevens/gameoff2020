@@ -12,5 +12,4 @@ build_mode = 1
 polygon = PoolVector2Array( -3.50867, -1.06658, -1.16293, -3.41921, 1.14498, -3.40682, 3.52856, -1.06658, 3.51595, 1.14983, 1.15759, 3.45293, -1.2386, 3.44054, -3.55912, 1.07554 )
 
 [node name="black_hole" type="Sprite" parent="."]
-scale = Vector2( 1, 1 )
 texture = ExtResource( 1 )
