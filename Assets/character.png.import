@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/moon.png-5d552c0a84ad7f88dacb3fb3c986b19b.stex"
+path="res://.import/character.png-43f4041af022245895c1437d0830fb24.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://moon/moon.png"
-dest_files=[ "res://.import/moon.png-5d552c0a84ad7f88dacb3fb3c986b19b.stex" ]
+source_file="res://Assets/character.png"
+dest_files=[ "res://.import/character.png-43f4041af022245895c1437d0830fb24.stex" ]
 
 [params]
 
