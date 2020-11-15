@@ -6,7 +6,7 @@ const FRICTION: int = 500;
 
 var velocity: Vector2 = Vector2.ZERO;
 
-func _physics_process(delta):
+func _physics_process(delta) -> void:
 	var axis = get_input_axis()
 	
 	if axis != Vector2.ZERO:
