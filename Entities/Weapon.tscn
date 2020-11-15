@@ -1,8 +1,170 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://Entities/Weapon.gd" type="Script" id=1]
 [ext_resource path="res://Entities/NormalBullet.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Assets/melee_attack.png" type="Texture" id=3]
+
+[sub_resource type="Animation" id=2]
+resource_name = "idle"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+
+[sub_resource type="Animation" id=13]
+resource_name = "slash_down"
+
+[sub_resource type="Animation" id=14]
+resource_name = "slash_left"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ 3, 4, 5 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+
+[sub_resource type="Animation" id=1]
+resource_name = "slash_right"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+
+[sub_resource type="Animation" id=15]
+resource_name = "slash_up"
+
+[sub_resource type="AnimationNodeAnimation" id=6]
+animation = "idle"
+
+[sub_resource type="AnimationNodeAnimation" id=7]
+animation = "idle"
+
+[sub_resource type="AnimationNodeAnimation" id=8]
+animation = "idle"
+
+[sub_resource type="AnimationNodeAnimation" id=9]
+animation = "idle"
+
+[sub_resource type="AnimationNodeBlendSpace2D" id=10]
+blend_point_0/node = SubResource( 6 )
+blend_point_0/pos = Vector2( 0, 1 )
+blend_point_1/node = SubResource( 7 )
+blend_point_1/pos = Vector2( 0, -1 )
+blend_point_2/node = SubResource( 8 )
+blend_point_2/pos = Vector2( 1, 0 )
+blend_point_3/node = SubResource( 9 )
+blend_point_3/pos = Vector2( -1, 0 )
+blend_mode = 1
+
+[sub_resource type="AnimationNodeAnimation" id=11]
+animation = "slash_right"
+
+[sub_resource type="AnimationNodeAnimation" id=16]
+animation = "slash_down"
+
+[sub_resource type="AnimationNodeAnimation" id=17]
+animation = "slash_up"
+
+[sub_resource type="AnimationNodeAnimation" id=18]
+animation = "slash_left"
+
+[sub_resource type="AnimationNodeBlendSpace2D" id=12]
+blend_point_0/node = SubResource( 11 )
+blend_point_0/pos = Vector2( 1, 0 )
+blend_point_1/node = SubResource( 16 )
+blend_point_1/pos = Vector2( 0, 1 )
+blend_point_2/node = SubResource( 17 )
+blend_point_2/pos = Vector2( 0, -1 )
+blend_point_3/node = SubResource( 18 )
+blend_point_3/pos = Vector2( -1, 0 )
+blend_mode = 1
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=19]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=20]
+switch_mode = 2
+
+[sub_resource type="AnimationNodeStateMachine" id=5]
+states/Idle/node = SubResource( 10 )
+states/Idle/position = Vector2( 446, 199 )
+states/Slash/node = SubResource( 12 )
+states/Slash/position = Vector2( 647, 199 )
+transitions = [ "Idle", "Slash", SubResource( 19 ), "Slash", "Idle", SubResource( 20 ) ]
+start_node = "Slash"
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id=4]
 
 [node name="Weapon" type="Node2D"]
 script = ExtResource( 1 )
 Bullet = ExtResource( 2 )
+
+[node name="Sprite" type="Sprite" parent="."]
+visible = false
+texture = ExtResource( 3 )
+vframes = 2
+hframes = 3
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/idle = SubResource( 2 )
+anims/slash_down = SubResource( 13 )
+anims/slash_left = SubResource( 14 )
+anims/slash_right = SubResource( 1 )
+anims/slash_up = SubResource( 15 )
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+tree_root = SubResource( 5 )
+anim_player = NodePath("../AnimationPlayer")
+active = true
+parameters/playback = SubResource( 4 )
+parameters/Idle/blend_position = Vector2( -0.0889348, 0.308901 )
+parameters/Slash/blend_position = Vector2( 0.400207, 0.110526 )
+
+[node name="ShotLocation" type="Node2D" parent="."]
