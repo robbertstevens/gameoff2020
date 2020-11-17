@@ -2,7 +2,7 @@
 
 [ext_resource path="res://Assets/character.png" type="Texture" id=1]
 [ext_resource path="res://Entities/Player.gd" type="Script" id=2]
-[ext_resource path="res://Entities/Weapon.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Entities/Weapons/BroadSword.tscn" type="PackedScene" id=3]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 4.0
