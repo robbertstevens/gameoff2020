@@ -1,9 +1,10 @@
 [gd_scene load_steps=24 format=2]
 
-[ext_resource path="res://Entities/NormalBullet.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Entities/Weapons/NormalBullet.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Assets/melee_attack.png" type="Texture" id=2]
 [ext_resource path="res://Entities/Weapons/BroadSword.gd" type="Script" id=3]
 [ext_resource path="res://Entities/Weapons/BaseWeapon.tscn" type="PackedScene" id=4]
+
 
 [sub_resource type="Animation" id=6]
 resource_name = "attack_down"
