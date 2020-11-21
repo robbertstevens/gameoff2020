@@ -5,10 +5,11 @@ onready var fsm = get_parent()
 onready var host = $"../.."
 
 func enter():
+	#print(host.name, " has entered: ", name)
 	pass
 
 func exit(new_state) -> void:
-	print("Exited state: ", name)
+	#print(host.name, " has exited state: ", name)
 	fsm.change_to(new_state);
 
 # Overload these optionally

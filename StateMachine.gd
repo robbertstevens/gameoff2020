@@ -29,7 +29,7 @@ func back() -> void:
 	pass
 	
 func _enter_state() -> void:
-	print("Entering state: ", current_state.name)
+	#print(parent.name, " is entering state: ", current_state.name)
 	#current_state.host = parent
 	current_state.enter()
 
