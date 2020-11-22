@@ -1,5 +1,6 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=16 format=2]
 
+[ext_resource path="res://Assets/projectile.png" type="Texture" id=1]
 [ext_resource path="res://Entities/Snake/States/Idle.gd" type="Script" id=2]
 [ext_resource path="res://Assets/snake.png" type="Texture" id=3]
 [ext_resource path="res://Entities/Snake/Snake.gd" type="Script" id=4]
@@ -95,3 +96,6 @@ script = ExtResource( 2 )
 
 [node name="Wandering" type="Node2D" parent="StateMachine"]
 script = ExtResource( 6 )
+
+[node name="Sprite" type="Sprite" parent="StateMachine/Wandering"]
+texture = ExtResource( 1 )

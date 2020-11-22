@@ -4,25 +4,28 @@ extends State
 var possible_wander_directions = [Vector2.UP, Vector2.DOWN, Vector2.RIGHT, Vector2.LEFT]
 var direction = Vector2.ZERO
 var wander_timer = null
+
+var target = Vector2.ZERO
+var velocity = Vector2.ZERO
+
 func enter() -> void:	
-	wander_timer = Timer.new()
-	wander_timer.connect("timeout", self, "become_idle")
-	wander_timer.set_wait_time(1)
-	add_child(wander_timer)
-	wander_timer.start()
+	randomize()
+	direction = possible_wander_directions[randi() % possible_wander_directions.size()]
+	target = host.global_position + (direction * 3)
+	$Sprite.global_position = target
+	print(target)
 	.enter()
 	
 func exit(new_state) -> void:
-	direction = Vector2.ZERO
 	.exit(new_state)
 
 func process(delta):
-	if direction == Vector2.ZERO:
-		direction = possible_wander_directions[randi() % possible_wander_directions.size()]
-		
-	host.velocity = host.velocity.move_toward(direction * host.MAX_SPEED, host.ACCELERATION * delta)
-	host.move_and_slide(host.velocity)
+	if host.global_position.distance_to(target) < 1:
+		print("to Idle")
+		return become_idle()
+	
+	velocity = host.velocity.move_toward(target * host.MAX_SPEED, host.ACCELERATION * delta)
+	host.move_and_slide(velocity)
 
 func become_idle() -> void:
-	wander_timer.queue_free()
 	exit("Idle")

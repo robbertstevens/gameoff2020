@@ -1,7 +1,7 @@
 extends KinematicBody2D
 
-var MAX_SPEED = 150
-var ACCELERATION = 200
+var MAX_SPEED = 100
+var ACCELERATION = 150
 
 var target = Vector2(-3, 0) * 16
 var velocity = Vector2.ZERO
