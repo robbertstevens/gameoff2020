@@ -3,7 +3,7 @@
 [ext_resource path="res://Assets/character.png" type="Texture" id=1]
 [ext_resource path="res://Entities/Player/Player.gd" type="Script" id=2]
 [ext_resource path="res://Entities/Weapons/BroadSword.tscn" type="PackedScene" id=3]
-[ext_resource path="res://Entities/Player/PlayerStateMachine.gd" type="Script" id=4]
+[ext_resource path="res://StateMachine.gd" type="Script" id=4]
 [ext_resource path="res://Entities/Player/States/Idle.gd" type="Script" id=5]
 [ext_resource path="res://Entities/Player/States/Move.gd" type="Script" id=6]
 
@@ -192,33 +192,35 @@ blend_point_3/node = SubResource( 18 )
 blend_point_3/pos = Vector2( -1, 0 )
 blend_mode = 1
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=20]
+[sub_resource type="AnimationNodeStateMachineTransition" id=22]
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=21]
+[sub_resource type="AnimationNodeStateMachineTransition" id=23]
 
-[sub_resource type="AnimationNodeStateMachine" id=22]
+[sub_resource type="AnimationNodeStateMachine" id=20]
 states/Idle/node = SubResource( 14 )
-states/Idle/position = Vector2( 454, 192 )
+states/Idle/position = Vector2( 424, 192 )
 states/Walk/node = SubResource( 19 )
 states/Walk/position = Vector2( 684, 192 )
-transitions = [ "Idle", "Walk", SubResource( 20 ), "Walk", "Idle", SubResource( 21 ) ]
+transitions = [ "Idle", "Walk", SubResource( 22 ), "Walk", "Idle", SubResource( 23 ) ]
 start_node = "Idle"
 
-[sub_resource type="AnimationNodeStateMachinePlayback" id=23]
+[sub_resource type="AnimationNodeStateMachinePlayback" id=21]
 
 [node name="Player" type="KinematicBody2D"]
 script = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 0, -8 )
 texture = ExtResource( 1 )
 vframes = 8
 hframes = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 0, 4 )
+position = Vector2( 0, -4 )
 shape = SubResource( 1 )
 
 [node name="Weapon" parent="." instance=ExtResource( 3 )]
+position = Vector2( 0, -4 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/idle_down = SubResource( 2 )
@@ -231,10 +233,10 @@ anims/walking_right = SubResource( 8 )
 anims/walking_up = SubResource( 9 )
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
-tree_root = SubResource( 22 )
+tree_root = SubResource( 20 )
 anim_player = NodePath("../AnimationPlayer")
 active = true
-parameters/playback = SubResource( 23 )
+parameters/playback = SubResource( 21 )
 parameters/Idle/blend_position = Vector2( 0, 0 )
 parameters/Walk/blend_position = Vector2( 0, 0 )
 
@@ -249,3 +251,9 @@ script = ExtResource( 6 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true
+
+[node name="Timers" type="Node2D" parent="."]
+
+[node name="ScentTimer" type="Timer" parent="Timers"]
+wait_time = 0.1
+autostart = true
