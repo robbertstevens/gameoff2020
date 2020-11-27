@@ -1,13 +1,63 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=27 format=2]
 
 [ext_resource path="res://StateMachine.gd" type="Script" id=1]
 [ext_resource path="res://Entities/Snake/States/Idle.gd" type="Script" id=2]
 [ext_resource path="res://Assets/snake.png" type="Texture" id=3]
 [ext_resource path="res://Entities/Snake/Snake.gd" type="Script" id=4]
+[ext_resource path="res://Shared/Hurtbox.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Entities/Snake/States/Chase.gd" type="Script" id=6]
+[ext_resource path="res://Shared/Stats.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Entities/Snake/States/Hurt.gd" type="Script" id=8]
+[ext_resource path="res://Entities/Snake/Dead.gd" type="Script" id=9]
+
+[sub_resource type="Animation" id=15]
+resource_name = "dead"
+length = 0.1
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 16 ]
+}
 
 [sub_resource type="Animation" id=1]
-resource_name = "idle"
+resource_name = "hit"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 12, 13 ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath("StateMachine/Hurt")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.2 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "_hurt_animation_finished"
+} ]
+}
+
+[sub_resource type="Animation" id=2]
 loop = true
 step = 0.25
 tracks/0/type = "value"
@@ -23,8 +73,7 @@ tracks/0/keys = {
 "values": [ 4, 5, 6, 7 ]
 }
 
-[sub_resource type="Animation" id=2]
-resource_name = "walking"
+[sub_resource type="Animation" id=3]
 length = 0.5
 loop = true
 step = 0.25
@@ -41,52 +90,78 @@ tracks/0/keys = {
 "values": [ 0, 1 ]
 }
 
-[sub_resource type="AnimationNodeAnimation" id=3]
-animation = "idle"
+[sub_resource type="AnimationNodeAnimation" id=16]
+animation = "dead"
+
+[sub_resource type="AnimationNodeAnimation" id=6]
+animation = "hit"
 
 [sub_resource type="AnimationNodeAnimation" id=4]
+animation = "idle"
+
+[sub_resource type="AnimationNodeAnimation" id=5]
 animation = "walking"
 
+[sub_resource type="AnimationNodeStateMachineTransition" id=7]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=8]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=9]
+
 [sub_resource type="AnimationNodeStateMachineTransition" id=10]
+switch_mode = 2
+auto_advance = true
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=11]
+[sub_resource type="AnimationNodeStateMachineTransition" id=17]
 
-[sub_resource type="AnimationNodeStateMachine" id=7]
-states/Idle/node = SubResource( 3 )
+[sub_resource type="AnimationNodeStateMachine" id=11]
+states/Dead/node = SubResource( 16 )
+states/Dead/position = Vector2( 148, 297 )
+states/Hit/node = SubResource( 6 )
+states/Hit/position = Vector2( 446, 324 )
+states/Idle/node = SubResource( 4 )
 states/Idle/position = Vector2( 310, 154 )
-states/Walk/node = SubResource( 4 )
+states/Walk/node = SubResource( 5 )
 states/Walk/position = Vector2( 662, 145 )
-transitions = [ "Idle", "Walk", SubResource( 10 ), "Walk", "Idle", SubResource( 11 ) ]
+transitions = [ "Idle", "Walk", SubResource( 7 ), "Walk", "Idle", SubResource( 8 ), "Idle", "Hit", SubResource( 9 ), "Hit", "Idle", SubResource( 10 ), "Idle", "Dead", SubResource( 17 ) ]
 start_node = "Idle"
+end_node = "Dead"
 
-[sub_resource type="AnimationNodeStateMachinePlayback" id=8]
+[sub_resource type="AnimationNodeStateMachinePlayback" id=12]
 
-[sub_resource type="CircleShape2D" id=9]
-radius = 3.72602
+[sub_resource type="CircleShape2D" id=13]
+radius = 3.0
+
+[sub_resource type="CircleShape2D" id=14]
+radius = 5.82478
 
 [node name="Snake" type="KinematicBody2D"]
-collision_layer = 2
-collision_mask = 2
+collision_layer = 4
+collision_mask = 0
 script = ExtResource( 4 )
 
 [node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 0, -6 )
 texture = ExtResource( 3 )
-vframes = 3
+vframes = 5
 hframes = 4
+frame = 4
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/idle = SubResource( 1 )
-anims/walking = SubResource( 2 )
+anims/dead = SubResource( 15 )
+anims/hit = SubResource( 1 )
+anims/idle = SubResource( 2 )
+anims/walking = SubResource( 3 )
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
-tree_root = SubResource( 7 )
+tree_root = SubResource( 11 )
 anim_player = NodePath("../AnimationPlayer")
 active = true
-parameters/playback = SubResource( 8 )
+parameters/playback = SubResource( 12 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( -0.685577, 2.6052 )
-shape = SubResource( 9 )
+position = Vector2( 0, -3.5 )
+shape = SubResource( 13 )
 
 [node name="StateMachine" type="Node2D" parent="."]
 script = ExtResource( 1 )
@@ -97,6 +172,26 @@ script = ExtResource( 2 )
 [node name="Chase" type="Node2D" parent="StateMachine"]
 script = ExtResource( 6 )
 
+[node name="Hurt" type="Node2D" parent="StateMachine"]
+script = ExtResource( 8 )
+
+[node name="Dead" type="Node2D" parent="StateMachine"]
+script = ExtResource( 9 )
+
 [node name="RayCast2D" type="RayCast2D" parent="."]
 enabled = true
 cast_to = Vector2( 0, 0 )
+
+[node name="Hurtbox" parent="." instance=ExtResource( 5 )]
+collision_layer = 16
+
+[node name="CollisionShape2D" parent="Hurtbox" index="0"]
+position = Vector2( 0, -6 )
+shape = SubResource( 14 )
+
+[node name="Stats" parent="." instance=ExtResource( 7 )]
+max_health = 4
+[connection signal="area_entered" from="Hurtbox" to="." method="_on_Hurtbox_area_entered"]
+[connection signal="health_changed" from="Stats" to="StateMachine/Hurt" method="_on_Stats_health_changed"]
+
+[editable path="Hurtbox"]

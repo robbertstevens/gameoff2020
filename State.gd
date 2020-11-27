@@ -12,6 +12,9 @@ func exit(new_state) -> void:
 	#print(host.name, " has exited state: ", name)
 	fsm.change_to(new_state);
 
+func back() -> void:
+	fsm.back()
+
 # Overload these optionally
 func process(delta: float) -> void:
 	pass

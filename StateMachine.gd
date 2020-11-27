@@ -25,8 +25,8 @@ func change_to(new_state_name) -> void:
 	_enter_state()
 
 func back() -> void:
-	current_state = previous_state
-	pass
+
+	change_to(previous_state.name)
 	
 func _enter_state() -> void:
 	#print(parent.name, " is entering state: ", current_state.name)
