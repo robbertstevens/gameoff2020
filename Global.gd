@@ -1,23 +1,26 @@
 extends Node
 
-export var player_scene = preload("res://Entities/Player/Player.tscn")
+onready var world = get_node("/root/World")
+onready var gui = world.get_node("Interface")
+
+const player_scene = preload("res://Entities/Player/Player.tscn")
 
 export var level_scenes = [
 	preload("res://LevelOne.tscn"),
 	#preload("res://LevelTwo.tscn")
 ]
 
-onready var world = get_node("/root/World")
-
 var player = null
 var current_level = null
+var score = 0 setget set_score;
 
-func _ready():
-	randomize()
-	call_deferred("load_random_level")
+func set_score(value):
+	score = value
+	gui.update_score(score)
 
-func add_entity_to_world(entity) -> void:
-	call_deferred("_add_child_to_world", entity)
+func _ready(): 
+	load_random_level()
+	gui.update_score(score)
 
 func spawn_player(position) -> void: 
 	var spawn_player = false
@@ -29,6 +32,9 @@ func spawn_player(position) -> void:
 	player.global_position = position
 	
 	if spawn_player: add_entity_to_world(player)
+
+func add_entity_to_world(entity):
+	call_deferred("_add_child_to_world", entity) 
 
 func _add_child_to_world(entity):
 	world.add_child(entity)
@@ -42,8 +48,3 @@ func load_random_level() -> void:
 	current_level = level_scene.instance()
 
 	add_entity_to_world(current_level)
-	
-func _input(event):
-	if event.is_action_pressed("ui_accept"):
-		print("new level")
-		load_random_level()

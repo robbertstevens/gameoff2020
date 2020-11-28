@@ -26,3 +26,6 @@ func _add_scent():
 	
 	scent_trail.push_front(scent);
 	
+func _on_Hurtbox_area_entered(area):
+	$Stats.health -= area.base_damage
+	print($Stats.health)

@@ -63,7 +63,6 @@ shape = SubResource( 7 )
 [node name="AnimatedSprite" type="AnimatedSprite" parent="End"]
 z_index = 1
 frames = SubResource( 6 )
-frame = 1
 playing = true
 
 [node name="Start" type="Position2D" parent="."]
@@ -72,6 +71,5 @@ position = Vector2( 440, 216 )
 [node name="AnimatedSprite" type="AnimatedSprite" parent="Start"]
 position = Vector2( 0, -3 )
 frames = SubResource( 3 )
-frame = 1
 playing = true
 [connection signal="body_entered" from="End/Area2D" to="." method="_on_Area2D_body_entered"]

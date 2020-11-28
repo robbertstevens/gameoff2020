@@ -39,11 +39,11 @@ _global_script_class_icons={
 [application]
 
 config/name="gameoff2020"
-run/main_scene="res://world.tscn"
+run/main_scene="res://World.tscn"
 
 [autoload]
 
-Global="*res://Global.gd"
+Global="*res://Global.tscn"
 
 [display]
 
@@ -131,6 +131,7 @@ ui_action_two={
 2d_physics/layer_3="Enemy"
 2d_physics/layer_4="Player Hurt Box"
 2d_physics/layer_5="Enemy Hurt Box"
+2d_physics/layer_6="Loot"
 
 [rendering]
 

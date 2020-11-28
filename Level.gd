@@ -6,5 +6,5 @@ onready var start_position = $Start
 func _ready():
 	Global.spawn_player(start_position.global_position)
 
-func _on_Area2D_body_entered(body):
+func _on_Area2D_body_entered(_body):
 	Global.load_random_level()

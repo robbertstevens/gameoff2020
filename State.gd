@@ -16,11 +16,11 @@ func back() -> void:
 	fsm.back()
 
 # Overload these optionally
-func process(delta: float) -> void:
+func process(_delta: float) -> void:
 	pass
 	
-func physics_process(delta: float) -> void:
+func physics_process(_delta: float) -> void:
 	pass
 
-func input(event: InputEvent) -> void: 
+func input(_event: InputEvent) -> void: 
 	pass
