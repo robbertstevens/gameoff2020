@@ -48,3 +48,12 @@ func load_random_level() -> void:
 	current_level = level_scene.instance()
 
 	add_entity_to_world(current_level)
+
+func pause():
+	get_tree().paused = true
+
+func unpause():
+	get_tree().paused = false
+	
+func update_player_health(new_health):
+	gui.update_health(new_health)

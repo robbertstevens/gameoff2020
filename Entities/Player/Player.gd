@@ -28,4 +28,10 @@ func _add_scent():
 	
 func _on_Hurtbox_area_entered(area):
 	$Stats.health -= area.base_damage
-	print($Stats.health)
+	
+	if $Stats.health <= 0:
+		$StateMachine.change_to("Dead")
+
+
+func _on_Stats_health_changed(new_value):
+	Global.update_player_health(new_value)
