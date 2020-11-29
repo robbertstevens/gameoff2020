@@ -6,7 +6,9 @@
 [sub_resource type="CircleShape2D" id=1]
 radius = 2.0
 
-[node name="Gold" type="RigidBody2D"]
+[node name="Gold" type="RigidBody2D" groups=[
+"money",
+]]
 z_index = 9
 collision_layer = 32
 collision_mask = 33

@@ -15,14 +15,14 @@ func process(_delta):
 
 func find_target(obj) -> Vector2:
 	var look     = host.get_node("RayCast2D")
-	look.cast_to = (obj.global_position - host.global_position)
+	look.cast_to = (obj.position - host.position)
 	look.force_raycast_update()
 	
 	if !look.is_colliding():
 		return look.cast_to.normalized()
 	else:
 		for scent in obj.scent_trail:
-			look.cast_to = (scent.global_position - host.global_position)
+			look.cast_to = (scent.position - host.position)
 			look.force_raycast_update()
 
 			if !look.is_colliding():

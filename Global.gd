@@ -5,13 +5,19 @@ onready var gui = world.get_node("Interface")
 
 const player_scene = preload("res://Entities/Player/Player.tscn")
 
+var rng = RandomNumberGenerator.new()
+
+
 export var level_scenes = [
-	preload("res://LevelOne.tscn"),
-	#preload("res://LevelTwo.tscn")
+	preload("res://Levels/Tutorial1.tscn"),
+	preload("res://Levels/Tutorial2.tscn"),
+	preload("res://Levels/LevelOne.tscn"),
+	preload("res://Levels/LevelTwo.tscn")
 ]
 
 var player = null
-var current_level = null
+var current_level = -1
+var current_level_instance = null
 var score = 0 setget set_score;
 
 func set_score(value):
@@ -19,7 +25,8 @@ func set_score(value):
 	gui.update_score(score)
 
 func _ready(): 
-	load_random_level()
+	load_next_level()
+	rng.randomize()
 	gui.update_score(score)
 
 func spawn_player(position) -> void: 
@@ -39,15 +46,23 @@ func add_entity_to_world(entity):
 func _add_child_to_world(entity):
 	world.add_child(entity)
 
-func load_random_level() -> void:
-	if current_level != null: current_level.queue_free()
+func load_next_level() -> void:
+	if current_level_instance != null: 
+		current_level_instance.queue_free()
+		for node in world.get_tree().get_nodes_in_group("money"):
+			node.queue_free()
+		
 	
-	var level_index = randi() % level_scenes.size()
-	var level_scene = level_scenes[level_index]
+	current_level += 1
 	
-	current_level = level_scene.instance()
+	if current_level >= level_scenes.size() -1: 
+		current_level = rng.randi_range(2, level_scenes.size() -1)
+	
+	var level_scene = level_scenes[current_level]
+	
+	current_level_instance = level_scene.instance()
 
-	add_entity_to_world(current_level)
+	add_entity_to_world(current_level_instance)
 
 func pause():
 	get_tree().paused = true
@@ -57,3 +72,9 @@ func unpause():
 	
 func update_player_health(new_health):
 	gui.update_health(new_health)
+	
+func get_vial_count():
+	var vials = world.get_tree().get_nodes_in_group("vial")
+	var size = vials.size()
+	gui.update_vial_count(size)
+	return size

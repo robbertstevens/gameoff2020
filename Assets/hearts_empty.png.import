@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/shot_glass.png-1919b145434d2eb0c96d720c89ddd918.stex"
+path="res://.import/hearts_empty.png-e3a38a734b24efef8456fad378e284a7.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/shot_glass.png"
-dest_files=[ "res://.import/shot_glass.png-1919b145434d2eb0c96d720c89ddd918.stex" ]
+source_file="res://Assets/hearts_empty.png"
+dest_files=[ "res://.import/hearts_empty.png-e3a38a734b24efef8456fad378e284a7.stex" ]
 
 [params]
 

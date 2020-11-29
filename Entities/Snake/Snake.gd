@@ -11,6 +11,10 @@ var velocity = Vector2.ZERO
 var direction = Vector2.ZERO
 var target = Vector2.ZERO
 
+func _process(delta):
+	if $Stats.health <= 0 and $StateMachine.current_state.name != "Dead":
+		$StateMachine.change_to("Dead")
+
 func _on_Hurtbox_area_entered(area):
 	stats.health -= area.base_damage
 	if $StateMachine.current_state.name != "Hurt":

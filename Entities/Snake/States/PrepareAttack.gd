@@ -3,10 +3,10 @@ extends State
 onready var AnimationTree = $"../../AnimationTree"
 onready var AnimationState = AnimationTree.get("parameters/playback")
 
-var attack_cooldown = 1
+var attack_cooldown = 0.5
 
 func enter():
-	attack_cooldown = 1
+	attack_cooldown = 0.5
 	AnimationState.travel("PrepareAttack")
 	
 func process(delta):
